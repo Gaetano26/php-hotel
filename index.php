@@ -40,10 +40,11 @@
 
     ];
 
-    if(!empty($_GET['searchVote']) && empty($_GET['searchParking'])) {
+    $filteredHotels = [];
+
+    if(!empty($_GET['searchVote']) && (!empty($_GET['searchParking']) || empty($_GET['searchParking']))) {
         $vote = $_GET['searchVote'];
         $parking = $_GET['searchParking'];
-        $filteredHotels = [];
         foreach($hotels as $hotel){
            if($hotel['vote'] == $vote && $hotel['parking']== $parking){
             $filteredHotels[] = $hotel;
@@ -51,7 +52,6 @@
         }
     }elseif (!empty($_GET['searchVote'])) {
         $vote = $_GET['searchVote'];
-        $filteredHotels = [];
         foreach($hotels as $hotel){
             if($hotel['vote'] == $vote){
              $filteredHotels[] = $hotel;
@@ -59,7 +59,6 @@
          }
     }elseif (!empty($_GET['searchParking'])) {
         $vote = $_GET['searchParking'];
-        $filteredHotels = [];
         foreach($hotels as $hotel){
             if($hotel['parking'] == $vote){
              $filteredHotels[] = $hotel;
@@ -97,11 +96,10 @@
               <option value="5">5</option>
            </select>
            <select name="searchParking">
-              <option value="">Parcheggio</option>
-              <option value="true">Disponibile</option>
-              <option value="false">Non Disponibile</option>
+              <option value="">Tutti</option>
+              <option value="true">Con Parcheggio</option>
            </select>
-           <button>Cerca</button>
+           <button type="submit">Cerca</button>
       </form>
     </header> 
     <main class="d-flex align-items-center justify-content-center" >
@@ -122,7 +120,13 @@
                         <tr>
                             <td> <?php echo $hotel['name'] ?> </td>
                             <td> <?php echo $hotel[ 'description'] ?> </td>
-                            <td> <?php echo $hotel['parking'] ?> </td>
+                            <td><?php
+                                    if ($hotel['parking']) {
+                                        echo 'Sì';
+                                    } else {
+                                        echo 'No';
+                                    } ?>
+                                </td>
                             <td> <?php echo $hotel[ 'vote'] ?> </td>
                             <td> <?php echo $hotel[ 'distance_to_center'] ?> </td>
                         </tr>
