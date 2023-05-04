@@ -39,11 +39,13 @@
         ],
 
     ];
+    
+    $filteredHotels = [];
+    
 
-    if(!empty($_GET['searchVote']) && !empty($_GET['searchParking'])) {
+    if(!empty($_GET['searchVote']) && (isset($_GET['searchParking']) && $_GET['searchParking']) != '') {
         $vote = $_GET['searchVote'];
         $parking = $_GET['searchParking'];
-        $filteredHotels = [];
         foreach($hotels as $hotel){
            if($hotel['vote'] == $vote && $hotel['parking']== $parking){
             $filteredHotels[] = $hotel;
@@ -51,15 +53,13 @@
         }
     }elseif (!empty($_GET['searchVote'])) {
         $vote = $_GET['searchVote'];
-        $filteredHotels = [];
         foreach($hotels as $hotel){
             if($hotel['vote'] == $vote){
              $filteredHotels[] = $hotel;
             }
          }
-    }elseif (!empty($_GET['searchParking'])) {
+    }elseif (isset($_GET['searchParking']) && $_GET['searchParking'] != '' ) {
         $vote = $_GET['searchParking'];
-        $filteredHotels = [];
         foreach($hotels as $hotel){
             if($hotel['parking'] == $vote){
              $filteredHotels[] = $hotel;
@@ -98,7 +98,8 @@
            </select>
            <select name="searchParking">
               <option value="">Tutti</option>
-              <option value="true">Parcheggio Disponibile</option>
+              <option value ="1">Parcheggio Disponibile</option>
+              <option value ="0" >Parcheggio non Disponibile</option>
            </select>
            <button type="submit">Cerca</button>
       </form>
