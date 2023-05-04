@@ -13,7 +13,7 @@
             'name' => 'Hotel Futuro',
             'description' => 'Hotel Futuro Descrizione',
             'parking' => true,
-            'vote' => 3,
+            'vote' => 2,
             'distance_to_center' => 2
         ],
         [
@@ -40,7 +40,7 @@
 
     ];
 
-    if(!empty($_GET['searchVote']) && !empty($_GET['searchParking'])) {
+    if(!empty($_GET['searchVote']) && empty($_GET['searchParking'])) {
         $vote = $_GET['searchVote'];
         $parking = $_GET['searchParking'];
         $filteredHotels = [];
